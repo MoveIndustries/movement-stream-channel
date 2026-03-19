@@ -1,0 +1,10 @@
+[package]
+name = "TempoStreamChannel"
+version = "0.1.0"
+authors = []
+
+[addresses]
+tempo_stream = "_"
+
+[dependencies]
+AptosFramework = { git = "https://github.com/movementlabsxyz/aptos-core.git", subdir = "aptos-move/framework/aptos-framework", rev = "m1" }

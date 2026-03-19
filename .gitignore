@@ -1,0 +1,14 @@
+build/
+.aptos/
+.movement/
+
+# Examples
+examples/node_modules/
+examples/dist/
+
+# Env
+.env
+.env.*
+
+# Claude
+.claude/

@@ -1,0 +1,21 @@
+{
+  "name": "tempo-stream-examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ai-api": "tsx src/ai-api-usage.ts",
+    "subscription": "tsx src/subscription.ts",
+    "freelancer": "tsx src/freelancer-payout.ts"
+  },
+  "dependencies": {
+    "@moveindustries/ts-sdk": "5.1.6",
+    "@noble/curves": "^1.8.0",
+    "@noble/hashes": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}
