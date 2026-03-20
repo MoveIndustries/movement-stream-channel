@@ -1,8 +1,8 @@
-# TempoStreamChannel for Movement Network
+# MovementStreamChannel for Movement Network
 
-A port of [TempoStreamChannel](https://paymentauth.tempo.xyz/draft-tempo-stream-00) to Movement Network — a streaming payment channel escrow contract from the Tempo open standard.
+A port of [TempoStreamChannel](https://paymentauth.tempo.xyz/draft-tempo-stream-00) to Movement Network — a streaming payment channel escrow contract based on the Tempo open standard.
 
-## What is TempoStreamChannel?
+## What is MovementStreamChannel?
 
 A streaming payment channel that lets two parties (payer and payee) exchange payments off-chain using signed vouchers, with only a few on-chain transactions for the entire lifecycle:
 
@@ -22,8 +22,8 @@ Entry functions: `open`, `settle`, `top_up`, `close`, `request_close`, `withdraw
 ### Build and test
 
 ```sh
-movement move compile --named-addresses tempo_stream=default
-movement move test --named-addresses tempo_stream=default
+movement move compile --named-addresses movement_stream=default
+movement move test --named-addresses movement_stream=default
 ```
 
 24 unit tests covering the full channel lifecycle including ed25519 voucher signature verification.
@@ -32,7 +32,7 @@ movement move test --named-addresses tempo_stream=default
 
 ```sh
 movement init --network custom --rest-url https://testnet.movementnetwork.xyz/v1
-movement move publish --named-addresses tempo_stream=default
+movement move publish --named-addresses movement_stream=default
 movement move run --function-id 'default::channel::initialize'
 ```
 

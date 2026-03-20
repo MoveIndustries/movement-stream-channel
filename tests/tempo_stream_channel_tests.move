@@ -1,5 +1,5 @@
 #[test_only]
-module tempo_stream::channel_tests {
+module movement_stream::channel_tests {
     use std::bcs;
     use std::signer;
     use std::string;
@@ -13,7 +13,7 @@ module tempo_stream::channel_tests {
     use aptos_framework::primary_fungible_store;
     use aptos_framework::timestamp;
 
-    use tempo_stream::channel;
+    use movement_stream::channel;
 
     // ----------------
     // Test helpers
@@ -136,7 +136,7 @@ module tempo_stream::channel_tests {
     // Tests
     // ----------------
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_open_channel(
         aptos_framework: &signer,
         admin: &signer,
@@ -168,8 +168,8 @@ module tempo_stream::channel_tests {
         assert!(!finalized, 8);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 5, location = tempo_stream::channel)] // E_CHANNEL_EXISTS
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 5, location = movement_stream::channel)] // E_CHANNEL_EXISTS
     fun test_open_duplicate_channel(
         aptos_framework: &signer,
         admin: &signer,
@@ -185,8 +185,8 @@ module tempo_stream::channel_tests {
         open_channel(payer, admin_addr, payee_addr, token, 10_000_000);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 3, location = tempo_stream::channel)] // E_INVALID_PAYEE
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 3, location = movement_stream::channel)] // E_INVALID_PAYEE
     fun test_open_zero_payee(
         aptos_framework: &signer,
         admin: &signer,
@@ -207,8 +207,8 @@ module tempo_stream::channel_tests {
         );
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 4, location = tempo_stream::channel)] // E_ZERO_DEPOSIT
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 4, location = movement_stream::channel)] // E_ZERO_DEPOSIT
     fun test_open_zero_deposit(
         aptos_framework: &signer,
         admin: &signer,
@@ -230,7 +230,7 @@ module tempo_stream::channel_tests {
         );
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_top_up(
         aptos_framework: &signer,
         admin: &signer,
@@ -256,8 +256,8 @@ module tempo_stream::channel_tests {
         assert!(deposit == 15_000_000, 1);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 9, location = tempo_stream::channel)] // E_NOT_PAYER
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 9, location = movement_stream::channel)] // E_NOT_PAYER
     fun test_top_up_not_payer(
         aptos_framework: &signer,
         admin: &signer,
@@ -273,7 +273,7 @@ module tempo_stream::channel_tests {
         channel::top_up(payee, admin_addr, channel_id, 1_000_000);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_top_up_cancels_close_request(
         aptos_framework: &signer,
         admin: &signer,
@@ -297,7 +297,7 @@ module tempo_stream::channel_tests {
         assert!(close_req2 == 0, 1);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_request_close(
         aptos_framework: &signer,
         admin: &signer,
@@ -316,8 +316,8 @@ module tempo_stream::channel_tests {
         assert!(close_req != 0, 0);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 13, location = tempo_stream::channel)] // E_CLOSE_NOT_READY
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 13, location = movement_stream::channel)] // E_CLOSE_NOT_READY
     fun test_withdraw_before_grace_period(
         aptos_framework: &signer,
         admin: &signer,
@@ -335,7 +335,7 @@ module tempo_stream::channel_tests {
         channel::withdraw(payer, admin_addr, channel_id);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_withdraw_after_grace_period(
         aptos_framework: &signer,
         admin: &signer,
@@ -365,8 +365,8 @@ module tempo_stream::channel_tests {
         assert!(finalized, 1);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 13, location = tempo_stream::channel)] // E_CLOSE_NOT_READY
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 13, location = movement_stream::channel)] // E_CLOSE_NOT_READY
     fun test_withdraw_without_request(
         aptos_framework: &signer,
         admin: &signer,
@@ -382,8 +382,8 @@ module tempo_stream::channel_tests {
         channel::withdraw(payer, admin_addr, channel_id);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 7, location = tempo_stream::channel)] // E_CHANNEL_FINALIZED
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 7, location = movement_stream::channel)] // E_CHANNEL_FINALIZED
     fun test_double_withdraw(
         aptos_framework: &signer,
         admin: &signer,
@@ -403,8 +403,8 @@ module tempo_stream::channel_tests {
         channel::withdraw(payer, admin_addr, channel_id);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 9, location = tempo_stream::channel)] // E_NOT_PAYER
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 9, location = movement_stream::channel)] // E_NOT_PAYER
     fun test_request_close_not_payer(
         aptos_framework: &signer,
         admin: &signer,
@@ -420,7 +420,7 @@ module tempo_stream::channel_tests {
         channel::request_close(payee, admin_addr, channel_id);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_close_grace_period_view(
         aptos_framework: &signer,
         admin: &signer,
@@ -431,7 +431,7 @@ module tempo_stream::channel_tests {
         assert!(channel::close_grace_period() == 900, 0);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_compute_channel_id_deterministic(
         aptos_framework: &signer,
         admin: &signer,
@@ -454,7 +454,7 @@ module tempo_stream::channel_tests {
     // Settle / Close tests (ed25519)
     // --------------------------------
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_settle_with_signature(
         aptos_framework: &signer,
         admin: &signer,
@@ -491,7 +491,7 @@ module tempo_stream::channel_tests {
         assert!(settled == 3_000_000, 3);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_settle_incremental(
         aptos_framework: &signer,
         admin: &signer,
@@ -523,8 +523,8 @@ module tempo_stream::channel_tests {
         assert!(settled == 5_000_000, 2);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 11, location = tempo_stream::channel)] // E_AMOUNT_NOT_INCREASING
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 11, location = movement_stream::channel)] // E_AMOUNT_NOT_INCREASING
     fun test_settle_not_increasing(
         aptos_framework: &signer,
         admin: &signer,
@@ -551,8 +551,8 @@ module tempo_stream::channel_tests {
         channel::settle(payee, admin_addr, channel_id, 3_000_000, sig2, pub2);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 10, location = tempo_stream::channel)] // E_AMOUNT_EXCEEDS_DEPOSIT
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 10, location = movement_stream::channel)] // E_AMOUNT_EXCEEDS_DEPOSIT
     fun test_settle_exceeds_deposit(
         aptos_framework: &signer,
         admin: &signer,
@@ -575,8 +575,8 @@ module tempo_stream::channel_tests {
         channel::settle(payee, admin_addr, channel_id, 20_000_000, sig, pubk);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 8, location = tempo_stream::channel)] // E_NOT_PAYEE
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 8, location = movement_stream::channel)] // E_NOT_PAYEE
     fun test_settle_not_payee(
         aptos_framework: &signer,
         admin: &signer,
@@ -599,8 +599,8 @@ module tempo_stream::channel_tests {
         channel::settle(payer, admin_addr, channel_id, 3_000_000, sig, pubk);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
-    #[expected_failure(abort_code = 12, location = tempo_stream::channel)] // E_INVALID_SIGNATURE
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
+    #[expected_failure(abort_code = 12, location = movement_stream::channel)] // E_INVALID_SIGNATURE
     fun test_settle_wrong_key(
         aptos_framework: &signer,
         admin: &signer,
@@ -625,7 +625,7 @@ module tempo_stream::channel_tests {
         channel::settle(payee, admin_addr, channel_id, 3_000_000, sig, wrong_pub);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_close_with_final_settlement(
         aptos_framework: &signer,
         admin: &signer,
@@ -663,7 +663,7 @@ module tempo_stream::channel_tests {
         assert!(finalized, 3);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_close_no_additional_settlement(
         aptos_framework: &signer,
         admin: &signer,
@@ -700,7 +700,7 @@ module tempo_stream::channel_tests {
         assert!(finalized, 2);
     }
 
-    #[test(aptos_framework = @0x1, admin = @tempo_stream, payer = @0xA, payee = @0xB)]
+    #[test(aptos_framework = @0x1, admin = @movement_stream, payer = @0xA, payee = @0xB)]
     fun test_settle_then_withdraw_after_grace(
         aptos_framework: &signer,
         admin: &signer,

@@ -1,4 +1,4 @@
-/// TempoStreamChannel — Unidirectional payment channel escrow for streaming payments.
+/// MovementStreamChannel — Unidirectional payment channel escrow for streaming payments.
 ///
 /// Port of the Tempo open standard (draft-tempo-stream-00) to Aptos Move
 /// using the Fungible Asset (FA) standard. Designed for Movement Network.
@@ -8,7 +8,7 @@
 ///   2. Payer signs vouchers off-chain (ed25519) authorizing cumulative amounts
 ///   3. Payee submits vouchers on-chain to settle (claim) funds
 ///   4. Channel closes cooperatively (payee) or after grace period (payer)
-module tempo_stream::channel {
+module movement_stream::channel {
     use std::bcs;
     use std::signer;
     use std::vector;
