@@ -1,4 +1,4 @@
-# MovementStreamChannel for Movement Network
+# MovementStreamChannel Move Contract and Example Use Cases
 
 A port of [TempoStreamChannel](https://paymentauth.tempo.xyz/draft-tempo-stream-00) to Movement Network — a streaming payment channel escrow contract based on the Tempo open standard.
 
